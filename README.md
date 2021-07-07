@@ -7,7 +7,7 @@ Usage
 ``` 
 git clone git://github.com/rtomayko/tilt.git
 ```
-Run the command line script::
+Run the command line script:
 
 ```
 python3 Neter.py
