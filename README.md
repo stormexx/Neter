@@ -5,7 +5,7 @@ Usage
 -----
 
 ``` 
-git clone git://github.com/rtomayko/tilt.git
+git clone git://github.com/stormexx/Neter.git
 ```
 Run the command line script:
 
