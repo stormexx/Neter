@@ -14,6 +14,6 @@ python3 Neter.py
 ```
 
 
-Copyright (c) 2021 @stormex. All rights reserved.
+Copyright (c) 2021 [stormex](https://www.instagram.com/stormex/). All rights reserved.
 
 
