@@ -3,4 +3,6 @@ Neter allows you to test the speed of your internet connection.
 
 
 
-Copyright© >> @stormex
+Copyright (c) 2021 @stormex. All rights reserved.
+
+
