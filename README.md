@@ -1,6 +1,5 @@
-<h1 align="center">Neter v1.1</h1>
+<h1 align="center">Neter</h1>
 
-# Neter
 Neter allows you to test the speed of your internet connection.
 
 
