@@ -11,4 +11,4 @@ Setup instructions [here](<https://github.com/stormexx/Neter/wiki/Setting-Up-Net
 ![Screenshot](https://raw.githubusercontent.com/stormexx/Neter/main/img/screenshot.png)
 
 
-Copyright (c) 2021 [stormex](https://twitter.com/_stormex/). All rights reserved.
+Copyright (c) 2021 [stormex](https://twitter.com/_stormex). All rights reserved.
