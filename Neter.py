@@ -1,98 +1,121 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-
-from colorama import Fore, Style
-
+import os
 import sp
-import sys
-import time
-
-print("""\33[0m
-
-
-███╗   ██╗███████╗████████╗███████╗██████╗ 
-████╗  ██║██╔════╝╚══██╔══╝██╔════╝██╔══██╗
-██╔██╗ ██║█████╗     ██║   █████╗  ██████╔╝
-██║╚██╗██║██╔══╝     ██║   ██╔══╝  ██╔══██╗
-██║ ╚████║███████╗   ██║   ███████╗██║  ██║
-╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝  \033[92mv1.0 \33[0m| \033[91m@stormex
-
-
-""")
-
-
-def progressBar():
-    print("\33[0mLoading:")
-
-    # animation = ["10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]
-    animation = ["[■□□□□□□□□□]", "[■■□□□□□□□□]", "[■■■□□□□□□□]", "[■■■■□□□□□□]", "[■■■■■□□□□□]", "[■■■■■■□□□□]",
-                 "[■■■■■■■□□□]", "[■■■■■■■■□□]", "[■■■■■■■■■□]", "[■■■■■■■■■■]"]
-
-    for i in range(len(animation)):
-        time.sleep(0.2)
-        sys.stdout.write("\r" + animation[i % len(animation)])
-        sys.stdout.flush()
-
-    print("\n")
+from net_check import is_connected
+from colors import *
+from banner import banner
+from bar import bar
 
 
 def printer(title, data):
     print(
-        Fore.CYAN + "[" + Style.BRIGHT + Fore.GREEN + "*" + Style.RESET_ALL + Fore.CYAN + "] \033[36m" + title + ": " + Fore.RED + "\033[5m < " + str(
-            data) + " >\033[0m")
+        cyan("[") + light_green("*") + reset() + cyan("]") + " \033[36m" + title + ": " + light_red("\033[5m < " + str(
+            data) + " >\033[0m"))
 
 
 def net_test():
-    servers = []
-    speed = sp.Speedtest()
-    speed.get_servers(servers)
-    speed.get_best_server()
-    speed.download(threads=None)
-    speed.upload(threads=None)
-    progressBar()
-    x = speed.results.dict()
+    os.system("clear")
+    banner()
+    try:
+        while True:
 
-    d = round(x.get("download") / 1000000, 2)
-    u = round(x.get("upload") / 1000000, 2)
-    p = round(x.get("ping"))
-    c = (x.get("client"))
+            print("                         [1] Start\n                        [99] Exit\n")
+            cmd = input(
+                light_red("neter@stormex")
+                + light_green(" »")
+                + reset()
+            )
+            os.system("clear")
+            banner()
 
-    # Ping
-    def ping():
-        if p >= 250:
-            return Style.BRIGHT + Fore.RED + str(p) + Style.RESET_ALL
-        elif 60 <= p < 250:
-            return Style.BRIGHT + Fore.YELLOW + str(p) + Style.RESET_ALL
-        elif p < 60:
-            return Style.BRIGHT + Fore.GREEN + str(p) + Style.RESET_ALL
+            if cmd != "":
+                if cmd == "1":
+                    os.system("clear")
+                    banner()
+                    if is_connected():
+                        print(light_green("[✔] INTERNET CONNECTION"))
+                        print(cyan("[+] Starting..."))
+                        servers = []
+                        speed = sp.Speedtest()
+                        speed.get_servers(servers)
+                        speed.get_best_server()
+                        speed.download(threads=None)
+                        speed.upload(threads=None)
+                        bar()
+                        os.system("clear")
+                        banner()
+                        x = speed.results.dict()
 
-    # Speed of download
-    def download():
-        if d < 3:
-            return Style.BRIGHT + Fore.RED + str(d) + Style.RESET_ALL
-        elif 3 <= d <= 5.5:
-            return Style.BRIGHT + Fore.YELLOW + str(d) + Style.RESET_ALL
-        elif d > 5.5:
-            return Style.BRIGHT + Fore.GREEN + str(d) + Style.RESET_ALL
+                        d = round(x.get("download") / 1000000, 2)
+                        u = round(x.get("upload") / 1000000, 2)
+                        p = round(x.get("ping"))
+                        c = (x.get("client"))
 
-    # Speed of upload
-    def upload():
-        if u < 0.8:
-            return Style.BRIGHT + Fore.RED + str(u) + Style.RESET_ALL
-        elif 0.8 <= u <= 1.5:
-            return Style.BRIGHT + Fore.YELLOW + str(u) + Style.RESET_ALL
-        elif u > 1.5:
-            return Style.BRIGHT + Fore.GREEN + str(u) + Style.RESET_ALL
+                        # Ping
+                        def ping():
+                            if p >= 250:
+                                return light_red(str(p)) + reset()
+                            elif 60 <= p < 250:
+                                return light_yellow(str(p)) + reset()
+                            elif p < 60:
+                                return light_green(str(p)) + reset()
 
-    print(Fore.CYAN + "[" + Style.BRIGHT + Fore.RED + "-" + Style.RESET_ALL + Fore.CYAN + "] \033[36mNetwork Test")
-    print(Fore.GREEN + "    └──" + Style.RESET_ALL, "\033[0m Ping:", ping(), "ms | Download:", download(),
-          "Mbit/s | Upload:", upload(),
-          "Mbit/s")
+                        # Speed of download
+                        def download():
+                            if d < 3:
+                                return light_red(str(d)) + reset()
+                            elif 3 <= d <= 5.5:
+                                return light_yellow(str(d)) + reset()
+                            elif d > 5.5:
+                                return light_green(str(d)) + reset()
 
-    printer("IP", c.get("ip"))
-    printer("Provider", c.get("isp"))
-    printer("Country", c.get("country"))
+                        # Speed of upload
+                        def upload():
+                            if u < 0.8:
+                                return light_red(str(u)) + reset()
+                            elif 0.8 <= u <= 1.5:
+                                return light_yellow(str(u)) + reset()
+                            elif u > 1.5:
+                                return light_green(str(u)) + reset()
+
+                        print("")
+                        print(
+                            cyan("[") + light_red("-") + reset() + cyan("]\033[36mNetwork Test"))
+                        print(light_green("    └──") + reset(), "\033[0m Ping:", ping(), "ms | Download:", download(),
+                              "Mbit/s | Upload:", upload(),
+                              "Mbit/s")
+
+                        printer("IP", c.get("ip"))
+                        printer("Provider", c.get("isp"))
+                        printer("Country", c.get("country"))
+
+                    else:
+                        print(light_red("[✘] CHECK YOUR INTERNET CONNECTION!"))
+                    print("\n")
+                    cmd = input(light_red(">>> Do you want to restart again (Y/n) ? ")
+                                + reset())
+                    while not (cmd == "Y" or cmd == "n"):
+                        os.system("clear")
+                        banner()
+                        cmd = input(light_red(">>> Do you want to restart again (Y/n) ? ")
+                                    + reset())
+                    if cmd == "Y":
+                        os.system('clear')
+                        net_test()
+                    elif cmd == "n":
+                        os.system("clear")
+                        banner()
+                        exit()
+                if cmd == "99":
+                    os.system("clear")
+                    banner()
+                    exit()
+
+
+
+    except():
+        print("")
 
 
 net_test()
